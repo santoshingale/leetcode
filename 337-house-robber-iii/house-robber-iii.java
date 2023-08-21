@@ -13,25 +13,18 @@
  *     }
  * }
  */
-class Solution {
+public class Solution {
     public int rob(TreeNode root) {
-        int ans[] = robHouse(root);
-        return Math.max(ans[0],ans[1]);
+        int[] num = dfs(root);
+        return Math.max(num[0], num[1]);
     }
-    
-    public int[] robHouse(TreeNode root){
-        if(root==null){
-            return new int[2];
-        }
-        
-        int left[] = robHouse(root.left);
-        int right[] = robHouse(root.right);
-        
-        int ans[] = new int[2];
-        
-        ans[0] = Math.max(left[0],left[1])+Math.max(right[0],right[1]);
-        ans[1] = root.val+left[0]+right[0];
-        
-        return ans;
+    private int[] dfs(TreeNode x) {
+        if (x == null) return new int[2];
+        int[] left = dfs(x.left);
+        int[] right = dfs(x.right);
+        int[] res = new int[2];
+        res[0] = left[1] + right[1] + x.val;
+        res[1] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        return res;
     }
 }
