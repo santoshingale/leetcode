@@ -1,22 +1,27 @@
 class Solution {
-    public double new21Game(int N, int K, int W) {
-        if (K == 0) return 1.0;
+    public double new21Game(int n, int k, int maxPts) {
+        if (k == 0 || n >= k + maxPts)
+        return 1.0;
+    
+    double[] dp = new double[n + 1];
+    double windowSum = 1.0;
+    double probability = 0.0;
+    
+    dp[0] = 1.0;
+    
+    for (int i = 1; i <= n; i++) {
+        dp[i] = windowSum / maxPts;
         
-        Deque<Double> queue = new LinkedList<>();
-        double sum = 0.0;
-        for (int i = K; i < K + W; i++) {
-            double prob = (i <= N) ? 1.0 : 0.0;
-            queue.offerLast(prob);
-            sum += prob;
+        if (i < k){
+            windowSum += dp[i];
         }
+        else
+            probability += dp[i];
         
-        
-        for (int i = K - 1; i >= 0; i--) {
-            double prob = sum / W;
-            sum = sum - queue.pollLast() + prob;
-            queue.offerFirst(prob);
-        }
-        
-        return queue.peekFirst();
+        if (i - maxPts >= 0)
+            windowSum -= dp[i - maxPts];
+    }
+    
+    return probability;
     }
 }
