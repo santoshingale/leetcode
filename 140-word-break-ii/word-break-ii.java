@@ -6,7 +6,6 @@ class Solution {
     }
 
     public void dfs(int idx, String s, List<String> wordDict, List<String> path, List<String> result){
-
         if(idx >= s.length()){
             StringBuilder sb = new StringBuilder();
             for(String ss : path){
@@ -14,10 +13,10 @@ class Solution {
                 sb.append(" ");
             }
             System.out.println(sb);
-            result.add(0, sb.toString().substring(0, sb.length() -1));
+            result.add(0, sb.toString().substring(0, sb.length() - 1));
             return;
         }
-        for(int end = idx +1; end <= s.length(); end++){
+        for(int end = idx + 1; end <= s.length(); end++){
             String sub = s.substring(idx, end);
             if(wordDict.contains(sub)){
                 path.add(sub);
