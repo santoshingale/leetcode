@@ -11,7 +11,7 @@ class Solution {
         
         // Binary search
         while(start < end) {
-            int mid = start + ((end - start + 1) / 2);
+            int mid = start + (end - start + 1) / 2;
             if(helper(candies, k, mid)) {
                 start = mid; 
             }
