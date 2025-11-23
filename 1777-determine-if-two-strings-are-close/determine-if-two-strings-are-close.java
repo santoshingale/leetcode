@@ -1,0 +1,32 @@
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        int N = 26;
+        int[] first = new int[26];
+        int[] second = new int[26];
+
+        for(char a : word1.toCharArray()){
+            first[a - 'a']++;
+        }
+
+        for(char a : word2.toCharArray()){
+            second[a - 'a']++;
+        }
+        for(int i = 0; i < N; i++){
+            if(first[i] == second[i]){
+                continue;
+            }
+            if(first[i] == 0 || second[i] == 0){
+                return false;
+            }
+        }
+        Arrays.sort(first);
+        Arrays.sort(second);
+
+        for(int i = 0; i < N; i++){
+            if(first[i] != second[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+}
