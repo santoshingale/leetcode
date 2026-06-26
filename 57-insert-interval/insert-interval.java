@@ -1,30 +1,27 @@
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> result = new ArrayList<>();
-        
-        // Iterate through intervals and add non-overlapping intervals before newInterval
-        int i = 0;
-        while (i < intervals.length && intervals[i][1] < newInterval[0]) {
-            result.add(intervals[i]);
-            i++;
+
+        ArrayList<int[]> list = new ArrayList<int[]>();
+
+        for(int[] interval : intervals) {
+            if(newInterval == null || newInterval[0] > interval[1]) {
+                list.add(interval);
+            }
+            else if( newInterval[1] < interval[0]) {
+                list.add(newInterval);
+                list.add(interval);
+                newInterval = null;
+            } 
+            else {
+                newInterval[0] = Math.min(interval[0], newInterval[0]);
+                newInterval[1] = Math.max(interval[1], newInterval[1]);      
+                                // newInterval = null;
+
+            }
+
         }
-        
-        // Merge overlapping intervals
-        while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
-            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
-            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
-            i++;
-        }
-        
-        // Add merged newInterval
-        result.add(newInterval);
-        
-        // Add non-overlapping intervals after newInterval
-        while (i < intervals.length) {
-            result.add(intervals[i]);
-            i++;
-        }
-        
-        return result.toArray(new int[result.size()][]);
+        if(newInterval != null) list.add(newInterval);
+        return list.toArray(new int[list.size()][]);
+
     }
 }
